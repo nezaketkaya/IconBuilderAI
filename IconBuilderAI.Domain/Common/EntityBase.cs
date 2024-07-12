@@ -15,3 +15,6 @@ namespace IconBuilderAI.Domain.Common
         public string? LastModifiedByUserId { get; set; }
     }
 }
+
+// EntityBase: Tüm entity sınıflarının temel özelliklerini içeren bir temel sınıftır.
+// Genellikle ID gibi ortak özellikleri barındırır ve diğer entity sınıfları için bir şablon oluşturur.
