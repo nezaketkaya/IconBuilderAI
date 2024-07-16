@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconBuilderAI.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconBuilderAI.Infrastructure", "IconBuilderAI.Infrastructure\IconBuilderAI.Infrastructure.csproj", "{DB71F6DA-DFFC-42C2-A3DB-7DFAF29F5A8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IconBuilderAI.WebApi", "IconBuilderAI.WebApi\IconBuilderAI.WebApi.csproj", "{B9F63A3E-8185-4AB8-8EEB-42011329C96D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DB71F6DA-DFFC-42C2-A3DB-7DFAF29F5A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB71F6DA-DFFC-42C2-A3DB-7DFAF29F5A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB71F6DA-DFFC-42C2-A3DB-7DFAF29F5A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F63A3E-8185-4AB8-8EEB-42011329C96D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F63A3E-8185-4AB8-8EEB-42011329C96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F63A3E-8185-4AB8-8EEB-42011329C96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F63A3E-8185-4AB8-8EEB-42011329C96D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
