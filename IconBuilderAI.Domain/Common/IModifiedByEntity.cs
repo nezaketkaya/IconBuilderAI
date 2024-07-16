@@ -8,7 +8,7 @@ namespace IconBuilderAI.Domain.Common
 {
     public interface IModifiedByEntity
     {
-        DateTimeOffset? LastModifiedOn { get; set; }
-        string? LastModifiedByUserId { get; set; }
+        DateTimeOffset? ModifiedOn { get; set; }
+        string? ModifiedByUserId { get; set; }
     }
 }
