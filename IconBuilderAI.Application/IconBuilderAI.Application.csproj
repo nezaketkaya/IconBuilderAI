@@ -14,4 +14,8 @@
     <ProjectReference Include="..\IconBuilderAI.Domain\IconBuilderAI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\" />
+  </ItemGroup>
+
 </Project>
