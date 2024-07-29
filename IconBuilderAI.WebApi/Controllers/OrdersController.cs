@@ -1,4 +1,5 @@
 ﻿using IconBuilderAI.Application.Features.Orders.Commands.Delete;
+using IconBuilderAI.Application.Features.Orders.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,12 @@ namespace IconBuilderAI.WebApi.Controllers
         public OrdersController(ISender mediatr)
         {
             _mediatr = mediatr;
+        }
+
+        [HttpGet("{id:guid")]
+        public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return Ok(await _mediatr.Send(new OrderGetByIdQuery(id), cancellationToken));
         }
 
 

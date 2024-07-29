@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IconBuilderAI.Application.Features.Orders.Queries
+namespace IconBuilderAI.Application.Features.Orders.Queries.GetAll
 {
     internal class OrderGetAllQuery
     {
