@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IconBuilderAI.Domain.Common;
+using MediatR;
 
-namespace IconBuilderAI.Application.Features.Orders.Commands
+namespace IconBuilderAI.Application.Features.Orders.Commands.Add
 {
-    internal class OrderAddCommandHandler
+    public class OrderAddCommandHandler : IRequestHandler<OrderAddCommand, Response<Guid>>
     {
+        public async Task<Response<Guid>> Handle(OrderAddCommand request, CancellationToken cancellationToken)
+        {
+
+        }
     }
 }

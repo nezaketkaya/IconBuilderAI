@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IconBuilderAI.Application.Features.Orders.Commands
+namespace IconBuilderAI.Application.Features.Orders.Commands.Add
 {
     public class OrderAddCommand : IRequest<Guid>
     {
@@ -19,3 +19,5 @@ namespace IconBuilderAI.Application.Features.Orders.Commands
         public int Quantity { get; set; }
     }
 }
+
+    
