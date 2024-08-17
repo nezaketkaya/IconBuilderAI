@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IconBuilderAI.Domain.Common
+namespace IconBuilderAI.Application.Common.Models
 {
     public class ErrorDto
     {

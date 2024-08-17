@@ -4,27 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IconBuilderAI.Domain.Common
+namespace IconBuilderAI.Application.Common.Models
 {
-    public class Response<T>
+    public class ResponseDto<T>
     {
-        public Response(T data) 
+        public ResponseDto(T data)
         {
             Succeeded = true;
             Message = string.Empty;
-            Errors = new List<ErrorDto>();
+            Errors = new();
             Data = data;
         }
 
-        public Response(T data, string message)
+        public ResponseDto(T data, string message)
         {
             Succeeded = true;
             Message = message;
-            Errors = new List<ErrorDto>();
+            Errors = new();
             Data = data;
         }
 
-        public Response(string message, List<ErrorDto> errors)
+        public ResponseDto(string message, List<ErrorDto> errors)
         {
             Succeeded = false;
             Message = message;
@@ -32,18 +32,22 @@ namespace IconBuilderAI.Domain.Common
             Data = default;
         }
 
-        public Response(string message, bool succeeded)
+        public ResponseDto(string message, bool succeeded)
         {
             Succeeded = succeeded;
             Message = message;
-            Errors = new List<ErrorDto>();
+            Errors = new();
             Data = default;
         }
 
+        public ResponseDto()
+        {
+            Errors = new();
+        }
 
         public bool Succeeded { get; set; }
         public string Message { get; set; }
-        public IEnumerable<ErrorDto> Errors { get; set; }
+        public List<ErrorDto> Errors { get; set; }
         public T Data { get; set; }
     }
 }
