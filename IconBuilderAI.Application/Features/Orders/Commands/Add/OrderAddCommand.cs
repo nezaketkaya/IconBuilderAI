@@ -27,7 +27,7 @@ namespace IconBuilderAI.Application.Features.Orders.Commands.Add
                 Size = orderAddCommand.Size,
                 Shape = orderAddCommand.Shape,
                 Quantity = orderAddCommand.Quantity,
-                CreatedOn = DateTimeOffset.Now,
+                CreatedOn = DateTimeOffset.UtcNow,
             };
         }
     }
