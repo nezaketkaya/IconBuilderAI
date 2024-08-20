@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IconBuilderAI.Domain.Extentions
+﻿namespace IconBuilderAI.Domain.Extentions
 {
     public static class IntegerExtentions
     {

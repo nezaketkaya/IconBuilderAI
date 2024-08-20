@@ -1,7 +1,6 @@
-﻿using IconBuilderAI.Domain.Common;
-using MediatR;
-using IconBuilderAI.Application.Common.Interfaces;
+﻿using IconBuilderAI.Application.Common.Interfaces;
 using IconBuilderAI.Application.Common.Models;
+using MediatR;
 
 namespace IconBuilderAI.Application.Features.Orders.Commands.Add
 {
@@ -20,6 +19,7 @@ namespace IconBuilderAI.Application.Features.Orders.Commands.Add
         {
             var order = OrderAddCommand.MapToOrder(request);
 
+            order.UserId = _currentUserService.UserId;
             order.CreatedByUserId = _currentUserService.UserId.ToString();
 
             _dbContext.Orders.Add(order);

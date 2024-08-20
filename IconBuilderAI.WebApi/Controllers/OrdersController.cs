@@ -23,14 +23,14 @@ namespace IconBuilderAI.WebApi.Controllers
             return Ok(await _mediatr.Send(command, cancellationToken)); 
         }
 
-        [HttpGet("{id:guid")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return Ok(await _mediatr.Send(new OrderGetByIdQuery(id), cancellationToken));
         }
 
 
-        [HttpDelete("{id:guid")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             return Ok(await _mediatr.Send(new OrderDeleteCommand(id), cancellationToken));
