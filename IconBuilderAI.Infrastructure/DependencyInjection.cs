@@ -1,14 +1,9 @@
 ﻿using IconBuilderAI.Application.Common.Interfaces;
+using IconBuilderAI.Domain.Settings;
 using IconBuilderAI.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IconBuilderAI.Infrastructure
 {
@@ -20,6 +15,8 @@ namespace IconBuilderAI.Infrastructure
                               (container => container.GetRequiredService<ApplicationDbContext>());
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+            services.Configure<JwtSettings>(jwtSettings => configuration.GetSection("JwtSettings").Bind(jwtSettings));
 
             return services;
         }
