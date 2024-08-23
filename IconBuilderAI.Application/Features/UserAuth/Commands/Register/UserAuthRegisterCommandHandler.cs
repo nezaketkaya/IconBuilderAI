@@ -1,5 +1,6 @@
 ﻿using IconBuilderAI.Application.Common.Interfaces;
 using IconBuilderAI.Application.Common.Models;
+using IconBuilderAI.Application.Common.Models.Emails;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,14 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
 
             var jwtDto = await _jwtService.GenerateTokenAsync(response.Id, response.Email, cancellationToken);
 
+            await SendEmailVerificationAsync(response.Email, cancellationToken);
+
             return new ResponseDto<JwtDto>(jwtDto, "Welcome to our application!");
+        }
+
+        private async Task SendEmailVerificationAsync(string email, CancellationToken cancellationToken)
+        {
+            var emailDto = new EmailSendEmailVerificationDto();
         }
     }
 }
