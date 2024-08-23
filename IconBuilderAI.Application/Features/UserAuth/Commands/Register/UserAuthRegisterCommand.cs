@@ -1,4 +1,6 @@
 ﻿using IconBuilderAI.Application.Common.Models;
+using IconBuilderAI.Domain.Entities;
+using IconBuilderAI.Domain.Identity;
 using MediatR;
 
 namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
@@ -10,5 +12,31 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
         public string ConfirmPassword { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+
+        public static User ToUser(UserAuthRegisterCommand command)
+        {
+            var id = Guid.NewGuid();
+
+            return new User()
+            {
+                Id = id,
+                Email = command.Email,
+                UserName = command.Email,
+                FirstName = command.FirstName,
+                LastName = command.LastName,
+                CreatedOn = DateTimeOffset.UtcNow,
+                CreatedByUserId = id.ToString(),
+                EmailConfirmed = true,
+                Balance = new UserBalance()
+                {
+                    Id = Guid.NewGuid(),
+                    Credits = 10,
+                    UserId = id,
+                    CreatedOn = DateTimeOffset.UtcNow,
+                    CreatedByUserId = id.ToString(),
+                }
+            };
+        }
     }
 }

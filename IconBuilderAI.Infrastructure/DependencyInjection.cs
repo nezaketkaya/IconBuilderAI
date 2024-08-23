@@ -1,6 +1,9 @@
 ﻿using IconBuilderAI.Application.Common.Interfaces;
+using IconBuilderAI.Domain.Identity;
 using IconBuilderAI.Domain.Settings;
 using IconBuilderAI.Infrastructure.Persistence.Context;
+using IconBuilderAI.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +20,21 @@ namespace IconBuilderAI.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<JwtSettings>(jwtSettings => configuration.GetSection("JwtSettings").Bind(jwtSettings));
+
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
+            })
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
+
+            services.AddScoped<IJwtService, JwtManager>();
+            services.AddScoped<IIdentityService, IdentityManager>();
 
             return services;
         }
