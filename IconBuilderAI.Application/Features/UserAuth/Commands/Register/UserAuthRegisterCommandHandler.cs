@@ -14,11 +14,13 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
     {
         private readonly IIdentityService _identityService;
         private readonly IJwtService _jwtService;
+        private readonly IEmailService _emailService;
 
-        public UserAuthRegisterCommandHandler(IIdentityService identityService, IJwtService jwtService)
+        public UserAuthRegisterCommandHandler(IIdentityService identityService, IJwtService jwtService, IEmailService emailService)
         {
             _identityService = identityService;
             _jwtService = jwtService;
+            _emailService = emailService;
         }
 
 
@@ -26,16 +28,20 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
         {
             var response = await _identityService.RegisterAsync(request, cancellationToken);
 
-            var jwtDto = await _jwtService.GenerateTokenAsync(response.Id, response.Email, cancellationToken);
+            var jwtDtoTask = _jwtService.GenerateTokenAsync(response.Id, response.Email, cancellationToken);
 
-            await SendEmailVerificationAsync(response.Email, cancellationToken);
+            var sendEmailTask = SendEmailVerificationAsync(response.Email, response.FirstName, response.EmailToken, cancellationToken);
 
-            return new ResponseDto<JwtDto>(jwtDto, "Welcome to our application!");
+            await Task.WhenAll(jwtDtoTask ,sendEmailTask);
+
+            return new ResponseDto<JwtDto>(await jwtDtoTask, "Welcome to our application!");
         }
 
-        private async Task SendEmailVerificationAsync(string email, CancellationToken cancellationToken)
+        private Task SendEmailVerificationAsync(string email, string firstName, string emailToken, CancellationToken cancellationToken)
         {
-            var emailDto = new EmailSendEmailVerificationDto();
+            var emailDto = new EmailSendEmailVerificationDto(email, firstName, emailToken);
+
+            return _emailService.SendEmailVerificationAsync(emailDto, cancellationToken);
         }
     }
 }

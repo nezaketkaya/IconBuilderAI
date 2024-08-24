@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IconBuilderAI.Application.Common.Models.Emails;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace IconBuilderAI.Application.Common.Interfaces
 {
     public interface IEmailService
     {
-        Task SendEmailVerificationAsync();
+        Task SendEmailVerificationAsync(EmailSendEmailVerificationDto emailDto, CancellationToken cancellationToken);
     }
 }

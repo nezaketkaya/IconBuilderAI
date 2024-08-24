@@ -29,8 +29,9 @@ namespace IconBuilderAI.Infrastructure.Services
             {
                 throw new Exception("User registration failed.");
             }
-
-            return new UserAuthRegisterResponseDto(user.Id, user.Email);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+             
+            return new UserAuthRegisterResponseDto(user.Id, user.Email, user.FirstName, token);
         }
 
         public Task<JwtDto> SignInAsync(UserAuthRegisterCommand command, CancellationToken cancellationToken)
