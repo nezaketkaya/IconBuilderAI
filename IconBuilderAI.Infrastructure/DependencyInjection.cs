@@ -36,13 +36,14 @@ namespace IconBuilderAI.Infrastructure
 
             services.AddScoped<IJwtService, JwtManager>();
             services.AddScoped<IIdentityService, IdentityManager>();
+            services.AddScoped<IEmailService, ResendEmailManager>();
 
             //Resend
             services.AddOptions();
             services.AddHttpClient<ResendClient>();
             services.Configure<ResendClientOptions>(o =>
             {
-                o.ApiToken = configuration.GetSection("ResendApiKey").Value!;
+                o.ApiToken = configuration.GetSection("ReSendApiKey").Value!;
             });
             services.AddTransient<IResend, ResendClient>();
 

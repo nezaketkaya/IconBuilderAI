@@ -2,11 +2,6 @@
 using IconBuilderAI.Application.Common.Models;
 using IconBuilderAI.Application.Common.Models.Emails;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
 {
