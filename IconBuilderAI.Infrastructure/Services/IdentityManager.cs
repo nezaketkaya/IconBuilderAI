@@ -7,6 +7,7 @@ using IconBuilderAI.Application.Features.UserAuth.Commands.VerifyEmail;
 using IconBuilderAI.Domain.Entities;
 using IconBuilderAI.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IconBuilderAI.Infrastructure.Services
 {
@@ -74,7 +75,12 @@ namespace IconBuilderAI.Infrastructure.Services
             {
                 throw new Exception("User's email verification failed.");
             }
-            return result.Succeeded;
+            return true;
+        }
+
+        public Task<bool> CheckIfEmailVerifiedAsync(string email, CancellationToken cancellationToken)
+        {
+            return _userManager.Users.AnyAsync(x => x.Email == email && x.EmailConfirmed, cancellationToken);
         }
     }
 }
