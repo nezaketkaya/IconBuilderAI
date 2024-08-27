@@ -1,6 +1,7 @@
 ﻿using IconBuilderAI.Application.Common.Interfaces;
 using IconBuilderAI.Application.Common.Models;
 using IconBuilderAI.Application.Common.Models.Auth;
+using IconBuilderAI.Application.Features.UserAuth.Commands.Login;
 using IconBuilderAI.Application.Features.UserAuth.Commands.Register;
 using IconBuilderAI.Domain.Entities;
 using IconBuilderAI.Domain.Identity;
@@ -34,11 +35,6 @@ namespace IconBuilderAI.Infrastructure.Services
             return new UserAuthRegisterResponseDto(user.Id, user.Email, user.FirstName, token);
         }
 
-        public Task<JwtDto> SignInAsync(UserAuthRegisterCommand command, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> IsEmailExistsAsync(string email, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -47,6 +43,24 @@ namespace IconBuilderAI.Infrastructure.Services
                 return true;
 
             return false;
+        }
+
+        public async Task<JwtDto> LoginAsync(UserAuthLoginCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            var jwtDto = await _jwtService.GenerateTokenAsync(user.Id, user.Email, cancellationToken);
+
+            return jwtDto;
+        }
+
+        public async Task<bool> CheckPasswordSignInAsync(string email, string password, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null) return false;
+
+            return await _userManager.CheckPasswordAsync(user, password);
         }
     }
 }
