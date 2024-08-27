@@ -16,6 +16,7 @@ namespace IconBuilderAI.Infrastructure.Services
         private const string ApiBaseUrl = "http://localhost:5041/api/";
         public Task SendEmailVerificationAsync(EmailSendEmailVerificationDto emailDto, CancellationToken cancellationToken)
         {
+            // Kullanıcı linke tıkladığında email ve token alıyoruz.
             var link = $"{ApiBaseUrl}UsersAuth/VerifyEmail?email={emailDto.Email}&token={emailDto.Token}";
 
             var message = new EmailMessage();

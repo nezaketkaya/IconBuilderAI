@@ -3,6 +3,7 @@ using IconBuilderAI.Application.Common.Models;
 using IconBuilderAI.Application.Common.Models.Auth;
 using IconBuilderAI.Application.Features.UserAuth.Commands.Login;
 using IconBuilderAI.Application.Features.UserAuth.Commands.Register;
+using IconBuilderAI.Application.Features.UserAuth.Commands.VerifyEmail;
 using IconBuilderAI.Domain.Entities;
 using IconBuilderAI.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -61,6 +62,19 @@ namespace IconBuilderAI.Infrastructure.Services
             if (user is null) return false;
 
             return await _userManager.CheckPasswordAsync(user, password);
+        }
+
+        public async Task<bool> VerifyEmailAsync(UserAuthVerifyEmailCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            var result = await _userManager.ConfirmEmailAsync(user, command.Token);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("User's email verification failed.");
+            }
+            return result.Succeeded;
         }
     }
 }

@@ -28,5 +28,10 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Login
         {
             return _identityService.CheckPasswordSignInAsync(email, password, cancellationToken);
         }
+
+        private Task<bool> CheckIfEmailVerifiedAsync(string email, CancellationToken cancellationToken)
+        {
+            return _identityService.IsEmailExistsAsync(email, cancellationToken);
+        }
     }
 }
