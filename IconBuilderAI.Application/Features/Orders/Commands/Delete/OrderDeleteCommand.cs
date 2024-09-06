@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using IconBuilderAI.Application.Common.Models;
+using MediatR;
 
 namespace IconBuilderAI.Application.Features.Orders.Commands.Delete
 {
-    public class OrderDeleteCommand : IRequest<Guid>
+    public class OrderDeleteCommand : IRequest<ResponseDto<Guid>>
     {
         public Guid Id { get; set; }
 

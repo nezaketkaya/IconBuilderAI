@@ -35,6 +35,12 @@ namespace IconBuilderAI.Infrastructure
                .AddEntityFrameworkStores<ApplicationDbContext>()
                .AddDefaultTokenProviders();
 
+            // // Sets the token lifespan to three hours for the email confirmation token
+            // services.Configure<DataProtectionTokenProviderOptions>(options =>
+            // {
+            //     options.TokenLifespan = TimeSpan.FromHours(3); // Sets the expiry to three hours
+            // });
+
             services.AddScoped<IJwtService, JwtManager>();
             services.AddScoped<IIdentityService, IdentityManager>();
             services.AddScoped<IEmailService, ResendEmailManager>();

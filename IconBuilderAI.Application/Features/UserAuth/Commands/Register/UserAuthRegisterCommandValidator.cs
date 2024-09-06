@@ -11,11 +11,8 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.Register
 {
     public class UserAuthRegisterCommandValidator : UserAuthValidatorBase<UserAuthRegisterCommand>
     {
-        private readonly IIdentityService _identityService;
         public UserAuthRegisterCommandValidator(IIdentityService identityService) : base(identityService)
         {
-            _identityService = identityService;
-
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email is required")
                 .Must(IsEmail).WithMessage("Email is not valid");

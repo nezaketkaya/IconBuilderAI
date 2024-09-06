@@ -19,4 +19,5 @@ namespace IconBuilderAI.Application.Features.UserAuth.Commands.VerifyEmail
 
             return new ResponseDto<string>(request.Email, "Email verified successfully.");
         }
+    }
 }

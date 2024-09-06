@@ -1,19 +1,16 @@
 ﻿using FluentValidation;
+using IconBuilderAI.Application.Common.FluentValidation.BaseValidators;
 using IconBuilderAI.Application.Common.Interfaces;
 
 namespace IconBuilderAI.Application.Features.UserAuth.Commands.Login
 {
-    public class UserAuthLoginCommandValidator : AbstractValidator<UserAuthLoginCommand>
+    public class UserAuthLoginCommandValidator : UserAuthValidatorBase<UserAuthLoginCommand>
     {
-        private readonly IIdentityService _identityService;
-        
-        public UserAuthLoginCommandValidator(IIdentityService identityService)
+        public UserAuthLoginCommandValidator(IIdentityService identityService) : base(identityService)
         {
-            _identityService = identityService;
-
             RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required")
-            .EmailAddress().WithMessage("Email is not valid");
+            .Must(IsEmail).WithMessage("Email is not valid");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required")

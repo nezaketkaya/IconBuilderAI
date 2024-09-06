@@ -1,6 +1,7 @@
 ﻿using IconBuilderAI.Application.Common.Interfaces;
 using IconBuilderAI.Application.Common.Models.Emails;
 using Resend;
+using System.Web;
 
 namespace IconBuilderAI.Infrastructure.Services
 {
@@ -17,7 +18,11 @@ namespace IconBuilderAI.Infrastructure.Services
         public Task SendEmailVerificationAsync(EmailSendEmailVerificationDto emailDto, CancellationToken cancellationToken)
         {
             // Kullanıcı linke tıkladığında email ve token alıyoruz.
-            var link = $"{ApiBaseUrl}UsersAuth/VerifyEmail?email={emailDto.Email}&token={emailDto.Token}";
+            var encodedEmail = HttpUtility.UrlEncode(emailDto.Email);
+
+            var encodedToken = HttpUtility.UrlEncode(emailDto.Token);
+
+            var link = $"{ApiBaseUrl}UsersAuth/verify-email?email={encodedEmail}&token={encodedToken}";
 
             var message = new EmailMessage();
             message.From = "onboarding@resend.dev";
