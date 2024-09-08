@@ -3,12 +3,6 @@ using IconBuilderAI.Domain.Entities;
 using IconBuilderAI.Domain.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IconBuilderAI.Infrastructure.Persistence.Context
 {

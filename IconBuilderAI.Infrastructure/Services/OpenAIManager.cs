@@ -3,32 +3,53 @@ using IconBuilderAI.Application.Common.Models.OpenAI;
 using OpenAI.ObjectModels.RequestModels;
 using OpenAI.ObjectModels;
 using IconBuilderAI.Domain.Enums;
+using MediatR;
+using System.Text;
 
 namespace IconBuilderAI.Infrastructure.Services
 {
     public class OpenAIManager : IOpenAIService
     {
-        //Nuget paketindeki servisle karışmaması için
-        private readonly OpenAI.Interfaces.IOpenAIService _openAIService;
+        private readonly ICurrentUserService _currentUserService;
 
-        public OpenAIManager(OpenAI.Interfaces.IOpenAIService openAIService)
+        //Nuget paketindeki servisle karışmaması için
+        private readonly OpenAI.Interfaces.IOpenAIService _openAiService;
+
+        public OpenAIManager(OpenAI.Interfaces.IOpenAIService openAiService, ICurrentUserService currentUserService)
         {
-            _openAIService = openAIService;
+            _openAiService = openAiService;
+            _currentUserService = currentUserService;
         }
 
         // Betalgo.OpenAI NuGet package
         public async Task<List<string>> DallECreateIconAsync(DallECreateIconRequestDto requestDto, CancellationToken cancellationToken)
         {
-            var imageResult = await _openAIService.Image.CreateImage(new ImageCreateRequest
+            var imageResult = await _openAiService.Image.CreateImage(new ImageCreateRequest
             {
-                Prompt = requestDto.Description,
-                N = requestDto.Quantity,
+                Prompt = CreateIconPrompt(requestDto),
+                N = requestDto.Model == AIModelType.DallE3 ? 1 : requestDto.Quantity,
                 Size = GetSize(requestDto.Size),
                 ResponseFormat = StaticValues.ImageStatics.ResponseFormat.Url,
-                User = "TestUser"
+                User = _currentUserService.UserId.ToString(),
+                Model = Models.Dall_e_3
             }, cancellationToken);
+            // TODO: Add error handling / If the model is Dall-e-3, Image size must be at least 1024x1024
+            if (!imageResult.Successful)
+            {
+                // Log the error or throw an exception
+                throw new ApplicationException($"Failed to create image: {imageResult.Error?.Message}");
+            }
 
-            return imageResult.Results.Select(x => x.Url).ToList();
+            if (imageResult.Results == null || !imageResult.Results.Any())
+            {
+                // Log the error or throw an exception
+                throw new ApplicationException("No image results were returned.");
+            }
+
+            return imageResult.Results
+                              .Select(x => x.Url)
+                              .Where(url => !string.IsNullOrEmpty(url))
+                              .ToList();
         }
 
         private string GetSize(IconSize size)
@@ -40,6 +61,22 @@ namespace IconBuilderAI.Infrastructure.Services
                 IconSize.Large => StaticValues.ImageStatics.Size.Size1024,
                 _ => StaticValues.ImageStatics.Size.Size256 //default
             };
+        }
+
+        private string CreateIconPrompt(DallECreateIconRequestDto request)
+        {
+            var promptBuilder = new StringBuilder();
+
+            promptBuilder.Append(
+                $"You're a World-class Icon Designer AI who is working on Mobile Application Icons. Generate icon with the following specifications: ");
+
+            promptBuilder.Append(
+                $"Design Type: {request.DesignType}, Colour Code (Hex Code): {request.ColourCode}, Shape: {request.Shape}, Description:{request.Description} ");
+
+            promptBuilder.Append(
+                $"I'll tip you 1000$ for your work, if I like it.");
+
+            return promptBuilder.ToString();
         }
     }
 }

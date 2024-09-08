@@ -8,31 +8,25 @@ namespace IconBuilderAI.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAuthController : ControllerBase
+    public class UsersAuthController(ISender mediatr) : ControllerBase
     {
-        private readonly ISender _mediatr;
-
-        public UserAuthController(ISender mediatr)
-        {
-            _mediatr = mediatr;
-        }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(UserAuthRegisterCommand command, CancellationToken cancellationToken)
         {
-            return Ok(await _mediatr.Send(command, cancellationToken));
+            return Ok(await mediatr.Send(command, cancellationToken));
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(UserAuthLoginCommand command, CancellationToken cancellationToken)
         {
-            return Ok(await _mediatr.Send(command, cancellationToken));
+            return Ok(await mediatr.Send(command, cancellationToken));
         }
 
         [HttpGet("verify-email")]
         public async Task<IActionResult> VerifyEmailAsync([FromQuery] UserAuthVerifyEmailCommand command, CancellationToken cancellationToken)
         {
-            return Ok(await _mediatr.Send(command, cancellationToken));
+            return Ok(await mediatr.Send(command, cancellationToken));
         }
     }
 }

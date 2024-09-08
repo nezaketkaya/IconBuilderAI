@@ -16,25 +16,27 @@ namespace IconBuilderAI.WebApi
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc(
-                    "v1",
-                    new OpenApiInfo()
-                    {
-                        Title = "MextFullStackSaaS Web API",
-                        Version = "1",
-                        Description = "Through this API you can access MextFullStackSaaS App's details",
-                        Contact = new OpenApiContact()
-                        {
-                            Email = "alper.tunga@yazilim.academy",
-                            Name = "Alper Tunga",
-                            Url = new Uri("https://yazilim.academy/")
-                        },
-                        License = new OpenApiLicense()
-                        {
-                            Name = "© 2024 Yazılım Academy Tüm Hakları Saklıdır",
-                            Url = new Uri("https://yazilim.academy/")
-                        }
-                    });
+                   "v1",
+                   new OpenApiInfo()
+                   {
+                       Title = "MextFullStackSaaS Web API",
+                       Version = "1",
+                       Description = "Through this API you can access MextFullStackSaaS App's details",
+                       Contact = new OpenApiContact()
+                       {
+                           Email = "alper.tunga@yazilim.academy",
+                           Name = "Alper Tunga",
+                           Url = new Uri("https://yazilim.academy/")
+                       },
+                       License = new OpenApiLicense()
+                       {
+                           Name = "© 2024 Yazılım Academy Tüm Hakları Saklıdır",
+                           Url = new Uri("https://yazilim.academy/")
+                       }
+                   });
+
                 setupAction.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+
                 setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
@@ -42,6 +44,7 @@ namespace IconBuilderAI.WebApi
                     BearerFormat = "JWT",
                     Description = $"Input your Bearer token in this format - Bearer token to access this API",
                 });
+
                 setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
